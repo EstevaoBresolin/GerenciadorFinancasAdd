@@ -1,0 +1,26 @@
+{
+  "name": "PWA Exemplo",
+  "short_name": "PWA",
+  "description": "Criando um PWA utilizando .NET Core 2.2 � Lucas Eschechola",
+
+  "icons": [
+    {
+      "src": "/images/icon192x192.png",
+      "sizes": "192x192"
+    },
+
+    {
+      "src": "/images/icon512x512.png",
+      "sizes": "512x512"
+    }
+  ],
+
+  "serviceworker": {
+    "src": "/service-worker.js",
+    "scope": "/",
+    "use_cache": false
+  },
+
+  "display": "standalone",
+  "start_url": "/"
+}

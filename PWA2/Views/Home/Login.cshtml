@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="text-center">
+    <h1>Login</h1>
+</div>
+</
+<br />
+<form action="/Usuario/Login" method="post" class="form">
+
+    
+
+    <label>Nome</label>
+    <input type="text" name="nome" value="" placeholder="Digite seu nome" required />
+
+    <label>Senha</label>
+    <input type="password" name="senha" value="" placeholder="Digite sua senha" required />
+
+    <input type="submit" value="Salvar" />
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Adicionar Usuario</a>
+</form>
+
+@if (ViewBag.MensagemErro != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.MensagemErro
+    </div>
+}
+<style>
+    .form {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        border: 1px solid red;
+    }
+
+    input {
+        width: 35%;
+    }
+</style>

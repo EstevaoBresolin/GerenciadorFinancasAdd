@@ -1,0 +1,263 @@
+﻿@model List<PWA2.Models.GastosGenericos>
+@{
+    ViewData["Title"] = "Página Inicial";
+}
+
+<div id="telaCheia">
+    <div id="modal">
+        <form action="/Home/AdicionarOrcamento" method="post" class="form">
+            <label>Qual seu orçamento mensal</label>
+            <input type="number" name="_orcamento" value="" placeholder="Digite o orçamento" required />
+
+            <input type="submit" name="Salvar" value="Salvar" />
+        </form>
+    </div>
+</div>
+
+@if(Model != null && Model.Count > 0)
+{
+ <div class="section">
+        <section class="left">
+
+            <h1>Gastos Genéricos</h1>
+            <ul class="aa">
+                @foreach (var gastos in Model)
+                {
+                    <li>
+                        <div class="item">
+                            <span>@gastos.Nome : R$@gastos.Valor Categoria @gastos.Categoria Data : @gastos.Data.ToString("dd/MM/yyyy")</span>
+
+                            <a class="nav-link" asp-route-id="@gastos.Id" asp-controller="Home" asp-action="Editar">Editar</a>
+
+                            <a class="nav-link" asp-route-id="@gastos.Id" asp-controller="Home" asp-action="Excluir">Excluir</a>
+
+                        </div>
+
+                    </li>
+                }
+            </ul>
+            <canvas id="meuGrafico" width="400" height="400"></canvas>
+        </section>
+
+        <div class="rigth">
+            <div class="text-center category total">
+                <h3>Total: R$@ViewBag.Total</h3>
+            </div>
+           
+            <div class="categorias">
+
+                @foreach (var cat in ViewBag.Categoria)
+                {
+                    <div class="text-center category">
+                        <h3>@cat.Key R$@cat.Value</h3>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+ </div>
+
+}
+else
+{
+    <div>
+        <ul class="navbar-nav flex-grow-1 elseitem">
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AdicionarGasto">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                    </svg> Adicionar Gasto
+                </a>
+            </li>
+            <li class="nav-item">
+                <h3 onclick="abrirModal()" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+                    </svg> Adicionar Orçamento
+                </h3>
+            </li>
+        </ul>
+    </div>
+}
+
+<script>
+    function atualizarPagina() {
+        // Atualiza a página após submeter o formulário
+        //location.reload();
+    }
+    function fecharModal() {
+        let telaCheia = document.getElementById("telaCheia");
+        telaCheia.style.display = "none";
+    }
+    function abrirModal() {
+        let telaCheia = document.getElementById("telaCheia");
+        telaCheia.style.display = "flex";
+    }
+</script>
+
+<style>
+    .section{
+        display:flex;
+        width: 90vw;
+    }
+    .left{
+        width:70%;
+    }
+    .rigth{
+        width:30%;
+    }
+    #telaCheia {
+        width: 100vw;
+        height: 100vh;
+        background: rgba(156, 156, 156, 0.59);
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h1{
+        color: #dee2e6 !important;
+    }
+
+    #modal {
+        z-index: 1;
+        width: 40%;
+        height: 30%;
+        background-color: #212529 !important;
+        border: 1px solid #495057 !important;
+        color: #dee2e6 !important;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+
+    .total{
+        margin-bottom:10px;
+    }
+
+    canvas{
+        height: 400px;
+        max-width:400px;
+        width: 400px;
+        max-height: 400px;
+    }
+    .categorias{
+        display:flex;
+        flex-direction: column;
+        gap:10px;
+    }
+    span{
+        font-weight: bold;
+    }
+    .container{
+        width: 100%;
+        display:flex;
+        justify-content:center;
+        
+        align-items: center;
+    }
+    .aa{
+        max-width: 60%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+       
+    }
+    li{
+        padding: 1rem;
+        background-color: #212529 !important;
+        border: 1px solid #495057 !important;
+        color: #dee2e6 !important;
+     
+
+        list-style-type: none;
+    }
+    h3{
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .item{
+        padding-inline: 1rem;
+        display:flex;
+        align-items: center;
+        justify-content:space-between;
+    }
+    .category{
+        padding: 1rem;
+        background-color: #212529 !important;
+        border: 1px solid #495057 !important;
+        color: #dee2e6 !important;
+    }
+    .last{
+        border-bottom: 1px solid #495057 !important;
+        padding-bottom: 0.5rem;
+    }
+
+    .elseitem{
+        display:flex;
+        flex-direction:row;
+        margin-top: 5rem;
+    }
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('meuGrafico').getContext('2d');
+    var plugin = {
+        id: 'customCanvasBackgroundColor',
+        beforeDraw: (chart, args, options) => {
+            const { ctx } = chart;
+            ctx.save();
+            ctx.globalCompositeOperation = 'destination-over';
+            ctx.fillStyle = options.color || '#dee2e6';
+            ctx.fillRect(0, 0, chart.width, chart.height);
+            ctx.restore();
+        }
+    };
+
+    var meuGrafico = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                'Educacao',
+                'Casa',
+                'Saude',
+                'Lazer',
+                'Alimentacao',
+                'Transporte',
+                'Investimentos',
+                'Outros'
+            ],
+            datasets: [{
+                label: 'Gastos por Categoria',
+                data: [@ViewBag.Educacao, @ViewBag.Casa, @ViewBag.Saude, @ViewBag.Lazer, @ViewBag.Alimentacao, @ViewBag.Transporte, @ViewBag.Investimentos, @ViewBag.Outros],
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)',
+                    'rgb(245, 125, 98)',
+                    'rgb(75, 192, 192)',
+                    'rgb(153, 102, 255)',
+                    'rgb(255, 159, 64)',
+                    'rgb(201, 203, 207)'
+                ],
+
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            plugins: {
+                customCanvasBackgroundColor: {
+                    color: '#212529',
+                    border: "1px solid 495057",
+                }
+            }
+        },
+        plugins: [plugin],
+    });
+</script>
+
+

@@ -1,0 +1,38 @@
+﻿@model GastosGenericos
+
+@{
+    ViewData["Title"] = "Editar Gasto";
+}
+
+<div class="text-center">
+    <h1>Editar Gasto</h1>
+</div>
+<br />
+
+<form asp-action="Editar" asp-route-id="@Model.Id" method="post" class="form">
+    <label>Nome</label>
+    <input type="text" name="Nome" value="@Model.Nome" placeholder="Digite o nome" required />
+
+    <label>Valor</label>
+    <input type="number" name="Valor" value="@Model.Valor" placeholder="Digite o valor" required />
+
+    <input type="hidden" name="Categoria" value="@Model.Categoria" />
+    
+    <input type="hidden" name="Data" value="@Model.Data" /><!-- Campo oculto para Categoria -->
+
+    <input type="submit" value="Salvar" />
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Voltar</a>
+</form>
+
+<style>
+    .form {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        border: 1px solid red;
+    }
+
+    input {
+        width: 35%;
+    }
+</style>

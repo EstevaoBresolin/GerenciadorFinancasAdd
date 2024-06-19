@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "Adicionar Gasto";
+}
+
+<div class="text-center">
+    <h1>Adicionar Gasto Genérico</h1>
+</div>
+</<br />
+<form action="/Home/AdicionarGasto" method="post" class="form">
+
+    <div class="mb-3">
+        <label class="form-label">Nome</label>
+        <input class="form-control input" type="text" name="Nome" value="" placeholder="Digite o gasto" required />
+  </div>
+
+    <div class="mb-3">
+        <label class="form-label">Valor</label>
+        <input class="form-control input" type="number" name="Valor" value="" placeholder="Digite o valor" required />
+    </div>
+   
+
+    <label class="form-label">Qual o tipo de gasto</label>
+    <select class="form-select input" name="Categoria" id="categoria">
+        <option  value="">Selecione uma categoria</option>
+        <option value="Educacao">Educacao</option>
+        <option value="Casa">Casa</option>
+        <option value="Saude">Saude</option>
+        <option value="Lazer">Lazer</option>
+        <option value="Alimentacao">Alimentacao</option>
+        <option value="Transporte">Transporte</option>
+        <option value="Investimentos">Investimentos</option>
+        <option value="Outros">Outros</option>
+    </select>
+
+
+    <div class="mb-3">
+        <label class="form-label">Valor</label>
+        <input class="form-control input date" type="date" name="Data" value="" placeholder="Digite a data" required />
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Salvar" />
+    <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Voltar</a>
+</form>
+
+<style>
+    .form{
+        display:flex;
+        flex-direction:column;
+        padding:1rem;
+       
+    }
+    .input{
+        width:35%;
+        background-color: #212529 !important;
+        border: 1px solid #495057 !important;
+        color: #dee2e6 !important;
+    }
+    label{
+        color: #dee2e6;
+    }
+    h1{
+        color: #dee2e6 !important;
+    }
+    select{
+        margin-bottom:25px;
+    }
+
+    .btn-primary{
+        width:35%;
+    }
+</style>
+
+@* <script>
+        document.getElementById('categoria').addEventListener('change', function () {
+            var categoriaSelecionada = this.value;
+            if (categoriaSelecionada === 'Educacao') {
+                console.log('Categoria "Educacao" selecionada');
+                alert(categoriaSelecionada)
+                // Aqui você pode adicionar lógica adicional, como enviar dados para o servidor
+            }
+        });
+</script> *@
