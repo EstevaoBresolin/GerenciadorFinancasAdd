@@ -7,4 +7,6 @@ public class MyDbContext : DbContext
 
     public DbSet<GastosGenericos> GastosGenericos { get; set; }
     public DbSet<Orcamento> Orcamento { get; set; }
+
+    public DbSet<Categoria> Categorias { get; set; }
 }

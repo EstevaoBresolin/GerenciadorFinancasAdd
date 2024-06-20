@@ -1,12 +1,12 @@
-﻿@{
+﻿@* @{
     ViewData["Title"] = "Adicionar Gasto";
 }
 
 <div class="text-center">
     <h1>Adicionar Gasto Genérico</h1>
-</div>
+</div> *@
 </<br />
-<form action="/Home/AdicionarGasto" method="post" class="form">
+@* <form action="/Home/AdicionarGasto" method="post" class="form">
 
     <div class="mb-3">
         <label class="form-label">Nome</label>
@@ -19,7 +19,7 @@
     </div>
    
 
-    <label class="form-label">Qual o tipo de gasto</label>
+     <label class="form-label">Qual o tipo de gasto</label>
     <select class="form-select input" name="Categoria" id="categoria">
         <option  value="">Selecione uma categoria</option>
         <option value="Educacao">Educacao</option>
@@ -30,7 +30,8 @@
         <option value="Transporte">Transporte</option>
         <option value="Investimentos">Investimentos</option>
         <option value="Outros">Outros</option>
-    </select>
+    </select> 
+ 
 
 
     <div class="mb-3">
@@ -41,6 +42,7 @@
     <input class="btn btn-primary" type="submit" value="Salvar" />
     <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Voltar</a>
 </form>
+
 
 <style>
     .form{
@@ -68,7 +70,7 @@
     .btn-primary{
         width:35%;
     }
-</style>
+</style> *@
 
 @* <script>
         document.getElementById('categoria').addEventListener('change', function () {
@@ -80,3 +82,76 @@
             }
         });
 </script> *@
+
+    @model GastosGenericos
+
+@{
+    ViewData["Title"] = "Adicionar Gasto";
+}
+
+<div class="text-center">
+    <h1>Adicionar Gasto Genérico</h1>
+</div>
+<br />
+
+<form asp-action="AdicionarGasto" method="post" class="form">
+    <div class="mb-3">
+        <label class="form-label">Nome</label>
+        <input class="form-control input" type="text" name="Nome" value="" placeholder="Digite o gasto" required />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Valor</label>
+        <input class="form-control input" type="number" name="Valor" value="" placeholder="Digite o valor" required />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Categoria</label>
+        <select class="form-select input" name="CategoriaId">
+            <option value="">Selecione uma categoria</option>
+            @foreach (var categoria in ViewBag.Categorias)
+            {
+                <option value="@categoria.Id">@categoria.Nome</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Data</label>
+        <input class="form-control input date" type="date" name="Data" value="" placeholder="Digite a data" required />
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Salvar" />
+    <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Voltar</a>
+</form>
+
+<style>
+    .form {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .input {
+        width: 35%;
+        background-color: #212529 !important;
+        border: 1px solid #495057 !important;
+        color: #dee2e6 !important;
+    }
+
+    label {
+        color: #dee2e6;
+    }
+
+    h1 {
+        color: #dee2e6 !important;
+    }
+
+    select {
+        margin-bottom: 25px;
+    }
+
+    .btn-primary {
+        width: 35%;
+    }
+</style>
