@@ -17,7 +17,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse d-sm-inline-flex justify-content-between collapse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AdicionarGasto">
@@ -27,6 +27,8 @@
                                 </svg> Adicionar Gasto
                             </a>
                         </li>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ListaGastos">Lista de Gastos</a>
+
                         <li class="nav-item">
                             <h3 class="nav-link">Total Gasto do Mês: R$ @ViewBag.Total</h3>
                         </li>

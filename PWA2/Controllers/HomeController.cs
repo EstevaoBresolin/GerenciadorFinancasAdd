@@ -17,6 +17,12 @@ namespace PWA2.Controllers
             _context = context;
         }
 
+        public IActionResult ListaGastos()
+        {
+            var gastosComCategoria = _context.VwGastosComCategorias.ToList();
+            return View(gastosComCategoria);
+        }
+
         public IActionResult Index()
         {
             var gastosGenericos = _context.GastosGenericos
@@ -27,15 +33,7 @@ namespace PWA2.Controllers
             ViewBag.Saldo = Saldo();
             ViewBag.Orcamento = _context.Orcamento.FirstOrDefault()?.Valor ?? 0;
 
-            /////////// COLAR ISSO NO BANCO ////////////
-            //INSERT INTO Categorias(Nome) VALUES('Outros');
-            //INSERT INTO Categorias(Nome) VALUES('Educacao');
-            //INSERT INTO Categorias(Nome) VALUES('Casa');
-            //INSERT INTO Categorias(Nome) VALUES('Saude');
-            //INSERT INTO Categorias(Nome) VALUES('Lazer');
-            //INSERT INTO Categorias(Nome) VALUES('Transporte');
-            //INSERT INTO Categorias(Nome) VALUES('Alimentacao');
-            //INSERT INTO Categorias(Nome) VALUES('Investimentos');
+          
 
 
 

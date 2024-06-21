@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Home\ListaGastos.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Views\Home\ListaGastos.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\js\javascript.js" />
   </ItemGroup>
 
