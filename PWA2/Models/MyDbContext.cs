@@ -1,4 +1,4 @@
-﻿using GerenciadorFinancas.Models;
+﻿
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -11,21 +11,21 @@ public class MyDbContext : DbContext
     public DbSet<GastosGenericos> GastosGenericos { get; set; }
     public DbSet<Orcamento> Orcamento { get; set; }
 
-    public DbSet<Categoria> Categorias { get; set; }
+    //public DbSet<Categoria> Categorias { get; set; }
 
     //
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
+    //protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //{
+    //    base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<GastosGenericos>()
-            .HasOne(g => g.Categoria)
-            .WithMany()
-            .HasForeignKey(g => g.IDCategoria);
-    }
+    //    modelBuilder.Entity<GastosGenericos>()
+    //        .HasOne(g => g.Categoria)
+    //        .WithMany()
+    //        .HasForeignKey(g => g.IDCategoria);
+    //}
 
-    // View
-    public DbSet<GastosComCategoria> VwGastosComCategorias { get; set; }
+    //// View
+    //public DbSet<GastosComCategoria> VwGastosComCategorias { get; set; }
 
     // ADICIONAR AO BANCO
     //    CREATE VIEW dbo.VwGastosComCategorias

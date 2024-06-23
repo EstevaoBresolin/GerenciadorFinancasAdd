@@ -17,57 +17,43 @@ namespace PWA2.Controllers
             _context = context;
         }
 
-        public IActionResult ListaGastos()
-        {
-            var gastosComCategoria = _context.VwGastosComCategorias.ToList();
-            return View(gastosComCategoria);
-        }
+        //public IActionResult ListaGastos()
+        //{
+        //    var gastosComCategoria = _context.VwGastosComCategorias.ToList();
+        //    return View(gastosComCategoria);
+        //}
 
         public IActionResult Index()
         {
-            var gastosGenericos = _context.GastosGenericos
-                .Include(g => g.Categoria) 
-                .ToList();
+            var gastosGenericos = _context.GastosGenericos.ToList();
 
             ViewBag.Total = GastoTotal(gastosGenericos);
             ViewBag.Saldo = Saldo();
+            ViewBag.Outros = _context.GastosGenericos.Where(g => g.Categoria == "Outros").Sum(g => g.Valor);
+            ViewBag.Educacao = _context.GastosGenericos.Where(g => g.Categoria == "Educacao").Sum(g => g.Valor);
+            ViewBag.Casa = _context.GastosGenericos.Where(g => g.Categoria == "Casa").Sum(g => g.Valor);
+            ViewBag.Saude = _context.GastosGenericos.Where(g => g.Categoria == "Saude").Sum(g => g.Valor);
+            ViewBag.Lazer = _context.GastosGenericos.Where(g => g.Categoria == "Lazer").Sum(g => g.Valor);
+            ViewBag.Transporte = _context.GastosGenericos.Where(g => g.Categoria == "Transporte").Sum(g => g.Valor);
+            ViewBag.Alimentacao = _context.GastosGenericos.Where(g => g.Categoria == "Alimentacao").Sum(g => g.Valor);
+            ViewBag.Investimentos = _context.GastosGenericos.Where(g => g.Categoria == "Investimentos").Sum(g => g.Valor);
             ViewBag.Orcamento = _context.Orcamento.FirstOrDefault()?.Valor ?? 0;
 
-          
+            Dictionary<string, double> totalPorCategoria = new Dictionary<string, double>();
 
-
-
-            //ViewBag.Outros = _context.GastosGenericos.Where(g => g.Categoria == "Outros").Sum(g => g.Valor);
-            //ViewBag.Educacao = _context.GastosGenericos.Where(g => g.Categoria == "Educacao").Sum(g => g.Valor);
-            //ViewBag.Casa = _context.GastosGenericos.Where(g => g.Categoria == "Casa").Sum(g => g.Valor);
-            //ViewBag.Saude = _context.GastosGenericos.Where(g => g.Categoria == "Saude").Sum(g => g.Valor);
-            //ViewBag.Lazer = _context.GastosGenericos.Where(g => g.Categoria == "Lazer").Sum(g => g.Valor);
-            //ViewBag.Transporte = _context.GastosGenericos.Where(g => g.Categoria == "Transporte").Sum(g => g.Valor);
-            //ViewBag.Alimentacao = _context.GastosGenericos.Where(g => g.Categoria == "Alimentacao").Sum(g => g.Valor);
-            //ViewBag.Investimentos = _context.GastosGenericos.Where(g => g.Categoria == "Investimentos").Sum(g => g.Valor);
-
-            var totalPorCategoria = gastosGenericos
-               .GroupBy(g => g.Categoria.Nome)
-               .Select(group => new { Categoria = group.Key, Total = group.Sum(g => g.Valor) })
-               .ToDictionary(g => g.Categoria, g => g.Total);
+            foreach (var gasto in gastosGenericos)
+            {
+                if (totalPorCategoria.ContainsKey(gasto.Categoria))
+                {
+                    totalPorCategoria[gasto.Categoria] += gasto.Valor;
+                }
+                else
+                {
+                    totalPorCategoria[gasto.Categoria] = gasto.Valor;
+                }
+            }
 
             ViewBag.Categoria = totalPorCategoria;
-
-            //Dictionary<string, double> totalPorCategoria = new Dictionary<string, double>();
-
-            //foreach (var gasto in gastosGenericos)
-            //{
-            //    if (totalPorCategoria.ContainsKey(gasto.Categoria))
-            //    {
-            //        totalPorCategoria[gasto.Categoria] += gasto.Valor;
-            //    }
-            //    else
-            //    {
-            //        totalPorCategoria[gasto.Categoria] = gasto.Valor;
-            //    }
-            //}
-
-            //ViewBag.Categoria = totalPorCategoria;
             return View(gastosGenericos);
         }
 
@@ -104,7 +90,7 @@ namespace PWA2.Controllers
 
         public IActionResult AdicionarGasto()
         {
-            ViewBag.Categorias = _context.Categorias.ToList();
+            //ViewBag.Categorias = _context.Categorias.ToList();
             return View();
         }
 
@@ -117,7 +103,7 @@ namespace PWA2.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Categorias = _context.Categorias.ToList();
+            //ViewBag.Categorias = _context.Categorias.ToList();
             return View(gastosGenericos);
         }
 
@@ -161,7 +147,7 @@ namespace PWA2.Controllers
                 return NotFound();
             }
 
-            ViewBag.Categorias = _context.Categorias.ToList(); // Carrega todas as categorias disponíveis
+            //ViewBag.Categorias = _context.Categorias.ToList(); // Carrega todas as categorias disponíveis
 
             return View(gastos);
         }
@@ -178,7 +164,7 @@ namespace PWA2.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Categorias = _context.Categorias.ToList(); // Carrega todas as categorias disponíveis
+            //ViewBag.Categorias = _context.Categorias.ToList(); // Carrega todas as categorias disponíveis
 
             return View(gastosGenericos);
         }
