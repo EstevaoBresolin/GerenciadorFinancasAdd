@@ -106,7 +106,7 @@ namespace PWA2.Controllers
         public IActionResult Editar(int id)
         {
             var gastos = _context.GastosGenericos
-                             .Include(g => g.Categoria)
+                             //.Include(g => g.Categoria)
                              .FirstOrDefault(g => g.Id == id);
 
             if (gastos == null)

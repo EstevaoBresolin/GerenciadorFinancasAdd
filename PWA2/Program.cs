@@ -41,53 +41,44 @@
 
 //app.Run();
 
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using PWA2.Models;
-using GerenciadorFinancas.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Adicionar serviços ao contêiner.
 builder.Services.AddControllersWithViews();
-// builder.Services.AddProgressiveWebApp();
 
+// Configurar o contexto do banco de dados.
 builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Configure Identity
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores<MyDbContext>()
-    .AddDefaultTokenProviders();
-
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.LoginPath = "/Account/Login";
-    options.AccessDeniedPath = "/Account/AccessDenied";
-});
+// Adicionar e configurar o Identity.
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<MyDbContext>();
 
 var app = builder.Build();
 
+// Configurar o pipeline de solicitação HTTP.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
-app.UseAuthentication(); // Adicione esta linha
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 var cultureInfo = new CultureInfo("pt-BR");
 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
