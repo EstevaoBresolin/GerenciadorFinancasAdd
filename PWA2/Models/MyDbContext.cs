@@ -39,7 +39,7 @@ public class MyDbContext : IdentityDbContext
     //Copiar código
     //Add-Migration AddIdentity
     //Update-Database
-}
+
 
 
     //public DbSet<Categoria> Categorias { get; set; }
