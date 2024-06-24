@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWA2.Models;
@@ -6,6 +7,7 @@ using System.Linq;
 
 namespace PWA2.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -16,12 +18,7 @@ namespace PWA2.Controllers
             _logger = logger;
             _context = context;
         }
-
-        //public IActionResult ListaGastos()
-        //{
-        //    var gastosComCategoria = _context.VwGastosComCategorias.ToList();
-        //    return View(gastosComCategoria);
-        //}
+    
 
         public IActionResult Index()
         {
@@ -70,27 +67,10 @@ namespace PWA2.Controllers
             return gastos.Sum(x => x.Valor);
         }
 
-        //////////// Adicionar Gastos ///////////////
-        //public IActionResult AdicionarGasto()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public IActionResult AdicionarGasto(GastosGenericos _gastosGenericos)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.GastosGenericos.Add(_gastosGenericos);
-        //        _context.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(_gastosGenericos);
-        //}
+        
 
         public IActionResult AdicionarGasto()
         {
-            //ViewBag.Categorias = _context.Categorias.ToList();
             return View();
         }
 
@@ -103,7 +83,6 @@ namespace PWA2.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.Categorias = _context.Categorias.ToList();
             return View(gastosGenericos);
         }
 
@@ -124,30 +103,16 @@ namespace PWA2.Controllers
             return RedirectToAction("Index");
         }
 
-        //////////// Editar gasto ///////////////        
-        //public IActionResult Editar(int id)
-        //{
-        //    var gastos = _context.GastosGenericos.Find(id);
-        //    if (gastos == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewBag.Categorias = _context.Categorias.ToList();
-        //    return View(gastos);
-        //}
-
         public IActionResult Editar(int id)
         {
             var gastos = _context.GastosGenericos
-                             .Include(g => g.Categoria) // Certifique-se de incluir a categoria
+                             .Include(g => g.Categoria)
                              .FirstOrDefault(g => g.Id == id);
 
             if (gastos == null)
             {
                 return NotFound();
             }
-
-            //ViewBag.Categorias = _context.Categorias.ToList(); // Carrega todas as categorias disponíveis
 
             return View(gastos);
         }
@@ -157,36 +122,17 @@ namespace PWA2.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Atualiza o estado do objeto GastosGenericos e salva no banco de dados
                 _context.GastosGenericos.Update(gastosGenericos);
                 _context.SaveChanges();
 
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.Categorias = _context.Categorias.ToList(); // Carrega todas as categorias disponíveis
 
             return View(gastosGenericos);
         }
 
-        //[HttpPost]
-        //public IActionResult Editar(GastosGenericos gastosGenericos)
-        //{
-        //    //_context.GastosGenericos.Update(gastosGenericos);
-        //    //_context.SaveChanges();
-        //    //return RedirectToAction("Index");
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.GastosGenericos.Update(gastosGenericos);
-        //        _context.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.Categorias = _context.Categorias.ToList();
-        //    return View(gastosGenericos);
-        //}
-
-
+      
         public IActionResult Excluir(int id)
         {
             var gasto = _context.GastosGenericos.Find(id);
