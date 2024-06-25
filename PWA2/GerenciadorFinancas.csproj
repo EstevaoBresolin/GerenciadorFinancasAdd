@@ -24,6 +24,8 @@
 	<PackageReference Include="WebEssentials.AspNetCore.PWA" Version="1.0.85" />
 </ItemGroup>
 
+<ProjectExtensions><VisualStudio><UserProperties vercel_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>
 
 
