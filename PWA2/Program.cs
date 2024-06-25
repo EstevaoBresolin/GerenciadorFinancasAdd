@@ -48,20 +48,16 @@ using PWA2.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Adicionar serviços ao contêiner.
 builder.Services.AddControllersWithViews();
 
-// Configurar o contexto do banco de dados.
 builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Adicionar e configurar o Identity.
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<MyDbContext>();
 
 var app = builder.Build();
 
-// Configurar o pipeline de solicitação HTTP.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

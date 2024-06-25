@@ -31,7 +31,7 @@
         </section>
 
         <div class="rigth">
-            <div class="text-center category total">
+            <div class="category total text-center">
                 <h3>Total: R$@ViewBag.Total</h3>
             </div>
            
@@ -39,7 +39,7 @@
 
                 @foreach (var cat in ViewBag.Categoria)
                 {
-                    <div class="text-center category">
+                    <div class="category text-center">
                         <h3>@cat.Key R$@cat.Value</h3>
                     </div>
                 }
@@ -77,9 +77,7 @@ else
 }
 
 <script>
-    function atualizarPagina() {
-        // Atualiza a página após submeter o formulário
-        //location.reload();
+    function atualizarPagina() {;
     }
     function fecharModal() {
         let telaCheia = document.getElementById("telaCheia");

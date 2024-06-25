@@ -18,7 +18,6 @@ namespace PWA2.Controllers
             _logger = logger;
             _context = context;
         }
-    
 
         public IActionResult Index()
         {
@@ -67,8 +66,6 @@ namespace PWA2.Controllers
             return gastos.Sum(x => x.Valor);
         }
 
-        
-
         public IActionResult AdicionarGasto()
         {
             return View();
@@ -106,7 +103,6 @@ namespace PWA2.Controllers
         public IActionResult Editar(int id)
         {
             var gastos = _context.GastosGenericos
-                             //.Include(g => g.Categoria)
                              .FirstOrDefault(g => g.Id == id);
 
             if (gastos == null)

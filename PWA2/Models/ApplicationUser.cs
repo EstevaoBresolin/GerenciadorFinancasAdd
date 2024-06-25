@@ -2,5 +2,4 @@
 
 public class ApplicationUser : IdentityUser
 {
-    // Adicione propriedades personalizadas aqui
 }
